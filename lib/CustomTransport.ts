@@ -3,7 +3,7 @@
 import { Context } from "egg";
 
 const moment = require('moment')
-const { serviceIPAddress, clientRealIPAddress, clientRealReqDomain, loggerDelimiter } = require('./utils')
+const { serviceIPAddress, clientRealReqDomain, loggerDelimiter } = require('./utils')
 const util = require('util')
 const FileTransport = require('egg-logger').FileTransport;
 
@@ -45,8 +45,8 @@ export class CustomTransport extends FileTransport {
     const traceId = this.ctx.request.get('x-request-id') || 'x-request-id';
     const uid = this.ctx.request.get('uid') || 'uid';
     // const clientIPAddress = clientIPAddress(this.ctx.request);
-    const _clientRealReqDomain = clientRealReqDomain(this.ctx);
-    const _clientRealIPAddress = clientRealIPAddress(this.ctx);
+    const _clientRealReqDomain = clientRealReqDomain(this.ctx) || 'reqDomain';
+    const _clientRealIPAddress = this.ctx.request.get('x-real-ip') || this.ctx.ip || 'ip'
 
     return [
       `[ ${level} ]`, // 日志级别

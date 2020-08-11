@@ -522,7 +522,7 @@
         "affectsGlobalScope": false
       },
       "../lib/customtransport.ts": {
-        "version": "6c941b3695ca9eb6ef82f7aabadd790a290b0224d568c6ad8c4b9cc6b4bf76da",
+        "version": "4eeb0b4b96068fe192136ceacd804fd7e10e286ce654eceb2099aa96c382ddb7",
         "signature": "0ceebed5eda8b1f3adaa22e3bb8d9d2a36722e20e9b3783af98319d41cc87d6e",
         "affectsGlobalScope": false
       },
