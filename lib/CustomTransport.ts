@@ -50,7 +50,7 @@ export class CustomTransport extends FileTransport {
     return [
       `[ ${level} ]`, // 日志级别
       `[ ${date} ]`, // 当前日期
-      `[ ${requestId} ]`, // 全链路跟踪id
+      `[ ${traceId} ]`, // 全链路跟踪id
       `[ ${serviceIPAddress} ]`, // 当前服务器IP
       // `[ ${clientIPAddress} ]`, // 当前客户端IP
       `[ ${_clientRealReqDomain} ]`, // 当前客户端真实域名
