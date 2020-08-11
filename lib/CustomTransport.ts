@@ -47,6 +47,7 @@ export class CustomTransport extends FileTransport {
     // const clientIPAddress = clientIPAddress(this.ctx.request);
     const _clientRealReqDomain = clientRealReqDomain(this.ctx) || 'reqDomain';
     const _clientRealIPAddress = this.ctx.request.get('x-real-ip') || this.ctx.ip || 'ip'
+    const use = this.ctx.starttime ? Date.now() - this.ctx.starttime : 0;
 
     return [
       `[ ${level} ]`, // 日志级别
@@ -58,6 +59,7 @@ export class CustomTransport extends FileTransport {
       `[ ${_clientRealReqDomain} ]`, // 当前客户端真实域名
       `[ ${_clientRealIPAddress} ]`, // 当前客户端真实IP
       `[ ${url} ]`, // 当前请求地址
+      `[ ${use}ms ]`, // 执行时长
     ].join(loggerDelimiter);
   }
 }

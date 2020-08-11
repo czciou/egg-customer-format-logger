@@ -39,6 +39,7 @@ class CustomTransport extends FileTransport {
         // const clientIPAddress = clientIPAddress(this.ctx.request);
         const _clientRealReqDomain = clientRealReqDomain(this.ctx) || 'reqDomain';
         const _clientRealIPAddress = this.ctx.request.get('x-real-ip') || this.ctx.ip || 'ip';
+        const use = this.ctx.starttime ? Date.now() - this.ctx.starttime : 0;
         return [
             `[ ${level} ]`,
             `[ ${date} ]`,
@@ -49,6 +50,7 @@ class CustomTransport extends FileTransport {
             `[ ${_clientRealReqDomain} ]`,
             `[ ${_clientRealIPAddress} ]`,
             `[ ${url} ]`,
+            `[ ${use}ms ]`,
         ].join(loggerDelimiter);
     }
 }
