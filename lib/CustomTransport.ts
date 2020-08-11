@@ -42,7 +42,7 @@ export class CustomTransport extends FileTransport {
     const url = this.ctx.request.url || '';
     // 通过 requestId 可以在 elk (日志系统) 分析查询时间，请求响应时间等指标
     // 每个请求下所有的requestId都是一样的，以获得统一解析的日志文件，便于排查问题。
-    const traceId = this.ctx.request.get('traceId') || '';
+    const traceId = this.ctx.request.get('x-request-id') || '';
     // const clientIPAddress = clientIPAddress(this.ctx.request);
     const _clientRealReqDomain = clientRealReqDomain(this.ctx);
     const _clientRealIPAddress = clientRealIPAddress(this.ctx);

@@ -522,7 +522,7 @@
         "affectsGlobalScope": false
       },
       "../lib/customtransport.ts": {
-        "version": "c7e089e2fbdd582e0f03e9bb60ec39d75f595e9ea2667227690b094cab86b0ba",
+        "version": "4cbb16e7ea3b23a23276bad231d9694c6ae714eeb4e5f2f6a263b7282a692330",
         "signature": "0ceebed5eda8b1f3adaa22e3bb8d9d2a36722e20e9b3783af98319d41cc87d6e",
         "affectsGlobalScope": false
       },
@@ -656,7 +656,7 @@
       "noFallthroughCasesInSwitch": true,
       "skipLibCheck": true,
       "skipDefaultLibCheck": true,
-      "inlineSourceMap": true,
+      "inlineSourceMap": false,
       "importHelpers": true,
       "allowSyntheticDefaultImports": false,
       "esModuleInterop": true,
