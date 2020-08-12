@@ -48,18 +48,26 @@ export class CustomTransport extends FileTransport {
     const _clientRealReqDomain = clientRealReqDomain(this.ctx) || 'reqDomain';
     const _clientRealIPAddress = this.ctx.request.get('x-real-ip') || this.ctx.ip || 'ip'
     const use = this.ctx.starttime ? Date.now() - this.ctx.starttime : 0;
+    const pid = process.pid;
 
-    return [
-      `[ ${level} ]`, // 日志级别
-      `[ ${date} ]`, // 当前日期
-      `[ ${traceId} ]`, // 全链路跟踪id
-      `[ ${uid} ]`, // 唯一id
-      `[ ${serviceIPAddress} ]`, // 当前服务器IP
-      // `[ ${clientIPAddress} ]`, // 当前客户端IP
-      `[ ${_clientRealReqDomain} ]`, // 当前客户端真实域名
-      `[ ${_clientRealIPAddress} ]`, // 当前客户端真实IP
-      `[ ${url} ]`, // 当前请求地址
-      `[ ${use}ms ]`, // 执行时长
-    ].join(loggerDelimiter);
+    let logswitch = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    if (this.ctx.logswitch) {
+      for (let i = 0; i < this.ctx.logswitch.length; i++) {
+        logswitch[i] = logswitch[i] & this.ctx.logswitch[i]
+      }
+    }
+    const logArr = new Array(10)
+    logswitch[0] && logArr.push(`[ ${level} ]`);  // 日志级别
+    logswitch[1] && logArr.push(`[ ${date} ]`);  // 当前日期
+    logswitch[2] && logArr.push(`[ ${traceId} ]`);  // 全链路跟踪id
+    logswitch[3] && logArr.push(`[ ${uid} ]`);  // 唯一id
+    logswitch[4] && logArr.push(`[ ${serviceIPAddress} ]`);  // 当前服务器IP
+    logswitch[5] && logArr.push(`[ ${_clientRealReqDomain} ]`);  // 当前客户端真实域名
+    logswitch[6] && logArr.push(`[ ${_clientRealIPAddress} ]`);  // 当前客户端真实IP
+    logswitch[7] && logArr.push(`[ ${url} ]`);  // 当前请求地址
+    logswitch[8] && logArr.push(`[ ${use}ms ]`);  // 执行时长
+    logswitch[9] && logArr.push(`[ ${pid} ]`);  // pid
+
+    return logArr.join(loggerDelimiter);
   }
 }
