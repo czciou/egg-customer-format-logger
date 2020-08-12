@@ -42,9 +42,10 @@ class CustomTransport extends FileTransport {
         const use = this.ctx.starttime ? Date.now() - this.ctx.starttime : 0;
         const pid = process.pid;
         let logswitch = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-        if (this.ctx.logswitch) {
-            for (let i = 0; i < this.ctx.logswitch.length; i++) {
-                logswitch[i] = logswitch[i] & this.ctx.logswitch[i];
+        if (this.ctx.app.config.customerLogger.logswitch) {
+            let _logswitch = this.ctx.app.config.customerLogger.logswitch;
+            for (let i = 0; i < _logswitch.length; i++) {
+                logswitch[i] = logswitch[i] & _logswitch[i];
             }
         }
         const logArr = new Array(10);
