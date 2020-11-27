@@ -5,9 +5,11 @@ const moment = require('moment');
 const { serviceIPAddress, clientRealReqDomain, loggerDelimiter } = require('./utils');
 const util = require('util');
 const FileTransport = require('egg-logger').FileTransport;
-class CustomTransport extends FileTransport {
+const file2transport = {};
+class CustomTransport {
     constructor(options, ctx) {
-        super(options);
+        // super(options)
+        this._super = file2transport[options.file] = file2transport[options.file] || new FileTransport(options);
         this.ctx = ctx; // 得到每次请求的上下文
     }
     log(level, args, meta) {
@@ -23,7 +25,10 @@ class CustomTransport extends FileTransport {
             args[0] = util.format(customMsg, args[0]);
         }
         // 这个是必须的，否则日志文件不会写入
-        super.log(level, args, meta);
+        this._super.log(level, args, meta);
+    }
+    shouldLog(level) {
+        return this._super.shouldLog(level);
     }
     /**
      * 自定义消息格式

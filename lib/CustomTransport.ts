@@ -6,13 +6,13 @@ const moment = require('moment')
 const { serviceIPAddress, clientRealReqDomain, loggerDelimiter } = require('./utils')
 const util = require('util')
 const FileTransport = require('egg-logger').FileTransport;
-
-export class CustomTransport extends FileTransport {
+const file2transport = {};
+export class CustomTransport {
   public ctx: any;
-
+  private _super: any;
   constructor(options: any, ctx: Context) {
-    super(options)
-
+    // super(options)
+    this._super = file2transport[options.file] = file2transport[options.file] || new FileTransport(options);
     this.ctx = ctx; // 得到每次请求的上下文
   }
 
@@ -30,9 +30,11 @@ export class CustomTransport extends FileTransport {
     }
 
     // 这个是必须的，否则日志文件不会写入
-    super.log(level, args, meta)
+    this._super.log(level, args, meta)
   }
-
+  shouldLog(level){
+    return this._super.shouldLog(level);
+  }
   /**
    * 自定义消息格式
    * @param { String } level 日志级别
